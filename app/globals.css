@@ -1,0 +1,188 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #2f2982;
+  --secondary: #4033ff;
+  --jolly: #c400f7;
+  --primary-dark: #1a1650;
+  --bg-dark: #07061a;
+  --bg-light: #f1f0ff;
+  --text-primary: #f1f0ff;
+  --text-muted: rgba(241, 240, 255, 0.58);
+  --surface: rgba(47, 41, 130, 0.15);
+  --surface-border: rgba(64, 51, 255, 0.2);
+  --selection: rgba(196, 0, 247, 0.25);
+  --page-glow: rgba(64, 51, 255, 0.1);
+  --page-gradient-start: rgba(7, 6, 26, 0.95);
+  --page-gradient-end: rgba(7, 6, 26, 1);
+  --hero-overlay-start: rgba(7, 6, 26, 0.2);
+  --hero-overlay-end: rgba(7, 6, 26, 0.65);
+  --panel-soft: rgba(255, 255, 255, 0.05);
+  --panel-strong: rgba(0, 0, 0, 0.12);
+  --panel-line: rgba(255, 255, 255, 0.1);
+  --nav-bg: rgba(7, 6, 26, 0.72);
+  --menu-bg: rgba(7, 6, 26, 0.96);
+  --solid-button-bg: #f1f0ff;
+  --solid-button-text: #07061a;
+  --card-shadow: 0 18px 80px rgba(5, 6, 26, 0.35);
+  --cursor-border: rgba(120, 108, 255, 0.9);
+  --cursor-fill: rgba(64, 51, 255, 0.1);
+  --cursor-shadow: 0 0 0 1px rgba(64, 51, 255, 0.2), 0 0 24px rgba(64, 51, 255, 0.18);
+  --cursor-active-border: rgba(196, 0, 247, 0.95);
+  --cursor-active-fill: rgba(196, 0, 247, 0.16);
+  --cursor-active-shadow: 0 0 0 1px rgba(196, 0, 247, 0.22), 0 0 34px rgba(196, 0, 247, 0.28);
+}
+
+.light-theme {
+  --bg-dark: #f1f0ff;
+  --text-primary: #130f38;
+  --text-muted: rgba(19, 15, 56, 0.62);
+  --surface: rgba(255, 255, 255, 0.84);
+  --surface-border: rgba(47, 41, 130, 0.14);
+  --selection: rgba(64, 51, 255, 0.15);
+  --page-glow: rgba(64, 51, 255, 0.16);
+  --page-gradient-start: rgba(248, 247, 255, 0.92);
+  --page-gradient-end: rgba(234, 231, 255, 1);
+  --hero-overlay-start: rgba(255, 255, 255, 0.24);
+  --hero-overlay-end: rgba(241, 240, 255, 0.78);
+  --panel-soft: rgba(255, 255, 255, 0.74);
+  --panel-strong: rgba(47, 41, 130, 0.05);
+  --panel-line: rgba(47, 41, 130, 0.12);
+  --nav-bg: rgba(241, 240, 255, 0.78);
+  --menu-bg: rgba(241, 240, 255, 0.96);
+  --solid-button-bg: #130f38;
+  --solid-button-text: #f1f0ff;
+  --card-shadow: 0 20px 70px rgba(47, 41, 130, 0.12);
+  --cursor-border: rgba(47, 41, 130, 0.86);
+  --cursor-fill: rgba(47, 41, 130, 0.06);
+  --cursor-shadow: 0 0 0 1px rgba(47, 41, 130, 0.2), 0 0 20px rgba(47, 41, 130, 0.14);
+  --cursor-active-border: rgba(196, 0, 247, 0.94);
+  --cursor-active-fill: rgba(196, 0, 247, 0.14);
+  --cursor-active-shadow: 0 0 0 1px rgba(196, 0, 247, 0.25), 0 0 30px rgba(196, 0, 247, 0.22);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, var(--page-glow), transparent 35%),
+    linear-gradient(180deg, var(--page-gradient-start) 0%, var(--page-gradient-end) 100%);
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family:
+    var(--font-dm-sans),
+    "Hiragino Sans",
+    "Yu Gothic",
+    "Meiryo",
+    sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--selection);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.hero-mesh {
+  background:
+    radial-gradient(circle at 18% 24%, rgba(64, 51, 255, 0.24), transparent 24%),
+    radial-gradient(circle at 80% 18%, rgba(196, 0, 247, 0.2), transparent 24%),
+    radial-gradient(circle at 60% 72%, rgba(47, 41, 130, 0.55), transparent 30%),
+    linear-gradient(180deg, var(--hero-overlay-start) 0%, var(--hero-overlay-end) 100%);
+  animation: meshShift 18s ease-in-out infinite alternate;
+}
+
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  height: 28px;
+  width: 28px;
+  pointer-events: none;
+  border: 1.5px solid var(--cursor-border);
+  background: var(--cursor-fill);
+  box-shadow: var(--cursor-shadow);
+  border-radius: 9999px;
+  mix-blend-mode: normal;
+  display: none;
+}
+
+.has-custom-cursor body,
+.has-custom-cursor a,
+.has-custom-cursor button,
+.has-custom-cursor input,
+.has-custom-cursor textarea,
+.has-custom-cursor select {
+  cursor: none;
+}
+
+.has-custom-cursor .custom-cursor {
+  display: block;
+}
+
+@layer components {
+  .input-field {
+    background: var(--panel-soft);
+    border-color: var(--panel-line);
+    @apply w-full rounded-[20px] border px-4 py-3 text-base text-foreground outline-none transition focus:border-secondary;
+  }
+
+  .input-field::placeholder {
+    color: var(--text-muted);
+  }
+
+  .glass-soft {
+    background: var(--panel-soft);
+    border-color: var(--panel-line);
+  }
+
+  .glass-strong {
+    background: var(--panel-strong);
+    border-color: var(--panel-line);
+  }
+
+  .nav-surface {
+    background: var(--nav-bg);
+  }
+
+  .menu-surface {
+    background: var(--menu-bg);
+  }
+
+  .cta-solid {
+    background: var(--solid-button-bg);
+    color: var(--solid-button-text);
+  }
+}
+
+@keyframes meshShift {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0);
+    filter: saturate(1);
+  }
+  50% {
+    transform: scale(1.04) translate3d(0, -12px, 0);
+    filter: saturate(1.1);
+  }
+  100% {
+    transform: scale(1.02) translate3d(0, 8px, 0);
+    filter: saturate(1);
+  }
+}
