@@ -1,6 +1,39 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "daisyui";
+
+/*
+  Design tokens for Tailwind v4 utility classes.
+  @theme inline: values are used as-is — required because we reference var()s here.
+  This replaces the old tailwind.config.ts theme.extend block.
+*/
+@theme inline {
+  /* Colors */
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-jolly: var(--jolly);
+  --color-bg: var(--bg-dark);
+  --color-surface: var(--surface);
+  --color-border: var(--surface-border);
+  --color-foreground: var(--text-primary);
+  --color-muted: var(--text-muted);
+
+  /* Typography */
+  --font-display: var(--font-syne);
+  --font-body: var(--font-dm-sans);
+  --font-mono: var(--font-jetbrains-mono);
+  --font-accent: var(--font-fraunces);
+
+  /* Shadows */
+  --shadow-glow: 0 0 40px rgba(196, 0, 247, 0.22);
+  --shadow-card: 0 18px 80px rgba(5, 6, 26, 0.35);
+
+  /* Background images */
+  --background-image-mesh: radial-gradient(circle at 20% 20%, rgba(64, 51, 255, 0.28), transparent 30%),
+    radial-gradient(circle at 80% 0%, rgba(196, 0, 247, 0.25), transparent 35%),
+    radial-gradient(circle at 50% 80%, rgba(47, 41, 130, 0.55), transparent 45%);
+}
+
+/* ---- Design tokens ---- */
 
 :root {
   --primary: #2f2982;
@@ -35,7 +68,7 @@
   --cursor-active-shadow: 0 0 0 1px rgba(196, 0, 247, 0.22), 0 0 34px rgba(196, 0, 247, 0.28);
 }
 
-.light-theme {
+[data-theme="kawaii-light"] {
   --bg-dark: #f1f0ff;
   --text-primary: #130f38;
   --text-muted: rgba(19, 15, 56, 0.62);
@@ -62,6 +95,8 @@
   --cursor-active-fill: rgba(196, 0, 247, 0.14);
   --cursor-active-shadow: 0 0 0 1px rgba(196, 0, 247, 0.25), 0 0 30px rgba(196, 0, 247, 0.22);
 }
+
+/* ---- Base styles ---- */
 
 * {
   box-sizing: border-box;

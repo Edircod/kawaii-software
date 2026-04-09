@@ -5,8 +5,9 @@ import {
   JetBrains_Mono,
   Syne
 } from "next/font/google";
+import { cookies, headers } from "next/headers";
 
-import { getInitialSettings } from "@/lib/request-context";
+import type { Locale } from "@/lib/i18n";
 
 import "./globals.css";
 
@@ -78,12 +79,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { locale, theme } = getInitialSettings();
+  const locale = (headers().get("x-locale") ?? "en") as Locale;
+  const theme = cookies().get("theme")?.value === "light" ? "kawaii-light" : "kawaii-dark";
 
   return (
     <html
       lang={locale}
-      className={`${theme === "light" ? "light-theme" : "dark-theme"} ${syne.variable} ${dmSans.variable} ${jetbrainsMono.variable} ${fraunces.variable}`}
+      data-theme={theme}
+      className={`${syne.variable} ${dmSans.variable} ${jetbrainsMono.variable} ${fraunces.variable}`}
       suppressHydrationWarning
     >
       <body>{children}</body>

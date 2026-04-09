@@ -10,11 +10,10 @@ import {
 } from "react";
 
 import { copy } from "@/lib/content";
-import { locales, type Locale, type ThemeMode } from "@/lib/i18n";
+import { type Locale, type ThemeMode } from "@/lib/i18n";
 
 type SiteContextValue = {
   locale: Locale;
-  setLocale: (locale: Locale) => void;
   theme: ThemeMode;
   toggleTheme: () => void;
   dictionary: (typeof copy)[Locale];
@@ -33,38 +32,29 @@ export function SiteProvider({
   initialLocale,
   initialTheme
 }: SiteProviderProps) {
-  const [locale, setLocaleState] = useState<Locale>(initialLocale);
   const [theme, setTheme] = useState<ThemeMode>(initialTheme);
 
   useEffect(() => {
-    document.documentElement.lang = locale;
-    document.cookie = `locale=${locale}; path=/; max-age=31536000; SameSite=Lax`;
-    window.localStorage.setItem("locale", locale);
-  }, [locale]);
+    document.documentElement.lang = initialLocale;
+    document.cookie = `locale=${initialLocale}; path=/; max-age=31536000; SameSite=Lax`;
+  }, [initialLocale]);
 
   useEffect(() => {
-    document.documentElement.classList.toggle("light-theme", theme === "light");
-    document.documentElement.classList.toggle("dark-theme", theme === "dark");
+    const themeAttr = theme === "light" ? "kawaii-light" : "kawaii-dark";
+    document.documentElement.setAttribute("data-theme", themeAttr);
     document.documentElement.style.colorScheme = theme;
     document.cookie = `theme=${theme}; path=/; max-age=31536000; SameSite=Lax`;
     window.localStorage.setItem("theme", theme);
   }, [theme]);
 
   useEffect(() => {
-    const savedLocale = window.localStorage.getItem("locale");
     const savedTheme = window.localStorage.getItem("theme");
-
-    if (savedLocale && locales.includes(savedLocale as Locale)) {
-      setLocaleState(savedLocale as Locale);
-    }
-
     if (savedTheme === "light" || savedTheme === "dark") {
       setTheme(savedTheme);
     }
 
     const media = window.matchMedia("(pointer: fine)");
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-
     if (media.matches && !reduced.matches) {
       document.documentElement.classList.add("has-custom-cursor");
     }
@@ -72,14 +62,13 @@ export function SiteProvider({
 
   const value = useMemo<SiteContextValue>(
     () => ({
-      locale,
-      setLocale: setLocaleState,
+      locale: initialLocale,
       theme,
       toggleTheme: () =>
         setTheme((current) => (current === "dark" ? "light" : "dark")),
-      dictionary: copy[locale]
+      dictionary: copy[initialLocale]
     }),
-    [locale, theme]
+    [initialLocale, theme]
   );
 
   return <SiteContext.Provider value={value}>{children}</SiteContext.Provider>;
